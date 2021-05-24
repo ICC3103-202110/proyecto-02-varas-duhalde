@@ -7,10 +7,8 @@ function convertUnits(input2, first, second) {
         } else if (second === 'Fahrenheit') {
             return input2 * (9 / 5) + 32
         } else if (second === 'Kelvin') {
-            return input2 + 273.15
+            return (input2 + 273.15)
         }
-
-
     } else if (first === 'Fahrenheit') {
         if (second === 'Celsius') {
             return ((input2 - 32) * (5 / 9))
@@ -45,10 +43,10 @@ function update(first, second, model, input2, input1) {
     } else if (input1 === 'n')
         return {
             ...model,
-            leftValue: input2,
-            leftUnit: first,
-            rightValue: convertUnits(input2, first, second),
-            rightUnit: second
+            leftValue: convertUnits(input2, first, second),
+            leftUnit: second,
+            rightValue: input2,
+            rightUnit: first
 
         }
 }

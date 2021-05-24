@@ -48,6 +48,7 @@ function inputForm(model) {
 
 
 function listForm(model) {
+    const { rightValue } = model
     const { input1 } = model
     const message1 = 'Left Temperature is source?'
     const { input2 } = model
@@ -66,7 +67,7 @@ function listForm(model) {
                 if (value === 'Y') {
                     return true
                 } else if (value === 'n') {
-
+                    return true
 
                 } else {
                     return 'Enter Y/n'
@@ -78,7 +79,7 @@ function listForm(model) {
             name: 'input2',
             type: 'input2',
             message: message2,
-            default: input2,
+            default: rightValue,
             validate: function(value) {
                 if (value >= 0 || value === 0) {
                     return true
@@ -117,6 +118,6 @@ function view(model) {
 
 module.exports = {
     view,
-    inputForm,
+
     listForm
 }
