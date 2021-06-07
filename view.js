@@ -5,7 +5,7 @@ const inquirer = require('inquirer')
 function getTitle() {
     return chalk.green(
         figlet.textSync(
-            'Unit Converter App', {
+            'Weather App', {
                 horizontalLayout: 'full',
                 font: 'Nancyj-Underlined'
             }
@@ -14,98 +14,87 @@ function getTitle() {
 }
 
 function getTable(model) {
-    const { leftValue } = model
-    const { leftUnit } = model
-    const { rightValue } = model
-    const { rightUnit } = model
+
+
+    const { name } = model
+    const { temp } = model
+    const { max } = model
+    const { min } = model
+
     return [{
-        'leftValue': leftValue,
-        'leftUnit': leftUnit,
-        'rightValue': rightValue,
-        'rightUnit': rightUnit
+        'name': name,
+        'temp': temp,
+        'max': max,
+        'min': min
+
     }]
 }
-
+/*
 function inputForm(model) {
-    const { input1 } = model
-    const message = 'Left Temperature is source?'
+    const { input } = model
+    const message = 'Increase or decrease?'
     return inquirer.prompt([{
-        name: 'input1',
-        type: 'input1',
+        name: 'input',
+        type: 'input',
         message: message,
-        default: 'Y/n',
+        default: input,
         validate: function(value) {
-            if (value === 'Y' || value === 'n') {
+            if (value === '+' || value === '-') {
                 return true
             } else {
-                return 'Enter Y/n'
+                return 'Enter + or -'
             }
-
-        },
+        }
     }])
 }
+*/
 
+function addLocation(model) {
+    const { city } = model
+    const message = 'Select Action'
+    const choices = ['Add City', 'Update City', 'Delete City']
 
-
-function listForm(model) {
-    const { rightValue } = model
-    const { input1 } = model
-    const message1 = 'Left Temperature is source?'
-    const { input2 } = model
-    const message2 = 'Temperature value to convert?'
-    const { first } = model
-    const message3 = 'From?'
-    const { second } = model
-    const message4 = 'to?'
-    const choices = ['Celsius', 'Fahrenheit', 'Kelvin']
     return inquirer.prompt([{
-            name: 'input1',
-            type: 'input1',
-            message: message1,
-            default: 'Y/n',
-            validate: function(value) {
-                if (value === 'Y') {
-                    return true
-                } else if (value === 'n') {
-                    return true
-
-                } else {
-                    return 'Enter Y/n'
-                }
-
-            }
-        },
-        {
-            name: 'input2',
-            type: 'input2',
-            message: message2,
-            default: rightValue,
-            validate: function(value) {
-                if (value >= 0 || value === 0) {
-                    return true
-                } else {
-                    return 'Enter number'
-                }
-
-            }
-        },
-
-        {
-            name: 'first',
+            name: 'action',
             type: 'list',
-            message: message3,
-            default: first,
+            message: message,
+            default: city,
             choices: choices
+
+        }, {
+
+
+            name: 'city',
+            type: 'input',
+            message: 'write the city',
+
+            when: (answers) => answers.action == ('Add City'),
+
+
         },
         {
-            name: 'second',
+            name: 'updateCity',
             type: 'list',
-            message: message4,
-            default: second,
-            choices: choices
+            message: 'what city do you want to Update ',
+            choices: choices,
+
+            when: (answers) => answers.action == 'Update City'
+
+        },
+        {
+            name: 'deleteCity',
+            type: 'list',
+            message: 'what city do you want to Delete ',
+            choices: choices,
+
+            when: (answers) => answers.action == 'Delete City'
+
         }
     ])
 }
+
+
+
 
 
 // Get actual console view
@@ -118,6 +107,5 @@ function view(model) {
 
 module.exports = {
     view,
-
-    listForm
+    addLocation
 }

@@ -1,18 +1,19 @@
-const { inputForm, listForm } = require('./view')
+const { addLocation, deleteCity, inputCity, updateCity } = require('./view')
 const { printTable } = require('console-table-printer')
 
-
+// Impure
 async function app(state, update, view) {
     while (true) {
         const { model, currentView } = state
         const { title, table } = currentView
-
-        console.clear()
+        // I/O
+        //console.clear()
         console.log(title)
         printTable(table)
+            // FORM (Ask user input)
+        const { action, city, updateCity, deleteCity, answers } = await addLocation(model)
 
-        const { input1, input2, first, second } = await listForm(model)
-        const updatedModel = update(first, second, model, input2, input1)
+        const updatedModel = update(model, action, city, answers, updateCity, deleteCity)
         state = {
             ...state,
             model: updatedModel,

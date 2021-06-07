@@ -1,55 +1,42 @@
 const inquirer = require('inquirer')
 
-function convertUnits(input2, first, second) {
-    if (first === 'Celsius') {
-        if (second === 'Celsius') {
-            return input2
-        } else if (second === 'Fahrenheit') {
-            return input2 * (9 / 5) + 32
-        } else if (second === 'Kelvin') {
-            return (input2 + 273.15)
-        }
-    } else if (first === 'Fahrenheit') {
-        if (second === 'Celsius') {
-            return ((input2 - 32) * (5 / 9))
-        } else if (second === 'Fahrenheit') {
-            return input2
-        } else if (second === 'Kelvin') {
-            return (input2 - 32) * (5 / 9) + 273.15
-        }
-    } else if (first === 'Kelvin') {
-        if (second === 'Celsius') {
-            return input2 - 273.15
-        } else if (second === 'Fahrenheit') {
-            return (input2 - 273.15) * (9 / 5) + 32
-        } else if (second === 'Kelvin') {
-            return input2
+function update(model, action, city, updateCity, deleteCity, answer) {
+    console.log(city);
+    console.log(model);
+
+    if (action == 'Add City') {
+        return {
+            ...model,
+            name: city,
+            temp: 1,
+            max: 1,
+            min: 1
         }
     }
-
 }
-
-
-
-function update(first, second, model, input2, input1) {
-    if (input1 === 'Y') {
+/*
+    } else if (action == 'Update City') {
         return {
             ...model,
-            leftValue: input2,
-            leftUnit: first,
-            rightValue: convertUnits(input2, first, second),
-            rightUnit: second
-        }
-    } else if (input1 === 'n')
-        return {
-            ...model,
-            leftValue: convertUnits(input2, first, second),
-            leftUnit: second,
-            rightValue: input2,
-            rightUnit: first
+            name: updateCity,
+            temp: 2,
+            max: 2,
+            min: 2
+
 
         }
+    }
 }
+
+    } else if (action == 'Delete City')
+        return {
+            ...model,
+            name: deleteCity,
+            temp: 3,
+            max: 3,
+            min: 3
+        }
+}*/
 
 module.exports = {
     update
