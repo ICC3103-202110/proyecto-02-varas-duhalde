@@ -14,20 +14,9 @@ function getTitle() {
 }
 
 function getTable(model) {
+    const { table } = model
+    return table
 
-
-    const { name } = model
-    const { temp } = model
-    const { max } = model
-    const { min } = model
-
-    return [{
-        'name': name,
-        'temp': temp,
-        'max': max,
-        'min': min
-
-    }]
 }
 /*
 function inputForm(model) {
@@ -51,6 +40,7 @@ function inputForm(model) {
 
 function addLocation(model) {
     const { city } = model
+    const { cities } = model
     const message = 'Select Action'
     const choices = ['Add City', 'Update City', 'Delete City']
 
@@ -76,7 +66,7 @@ function addLocation(model) {
             name: 'updateCity',
             type: 'list',
             message: 'what city do you want to Update ',
-            choices: choices,
+            choices: cities,
 
             when: (answers) => answers.action == 'Update City'
 
@@ -85,7 +75,7 @@ function addLocation(model) {
             name: 'deleteCity',
             type: 'list',
             message: 'what city do you want to Delete ',
-            choices: choices,
+            choices: cities,
 
             when: (answers) => answers.action == 'Delete City'
 
