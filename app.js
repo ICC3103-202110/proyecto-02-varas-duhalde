@@ -1,7 +1,15 @@
 const { addLocation, dcity, inputCity, ucity } = require('./view')
 const { printTable } = require('console-table-printer')
+    //
+let weather = {
+        "apiKey": "05742665ac70e1c44830f0a44ce1a51c",
+        fetchWeather: function() {
+            fetch(
 
-// Impure
+            )
+        }
+    }
+    // Impure
 async function app(state, update, view) {
     while (true) {
         const { model, currentView } = state

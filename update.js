@@ -4,8 +4,6 @@ function update(model, action, city, ucity, dcity) {
     const { table } = model
     const { cities } = model
 
-    console.log(model);
-
     if (action == 'Add City') {
         const nextCity = city
         console.log(city)
@@ -24,9 +22,8 @@ function update(model, action, city, ucity, dcity) {
         }
 
     } else if (action == 'Update City') {
-        console.log(ucity)
-        let findCity = table.findIndex(function(position) {
-            return position.name == ucity;
+        let findCity = table.findIndex(function(index) {
+            return index.name == ucity;
         });
         const newTemp = table[findCity].temp = 123
         const newMax = table[findCity].max = 123
@@ -41,16 +38,10 @@ function update(model, action, city, ucity, dcity) {
             table: table,
 
         }
-
     } else if (action == 'Delete City') {
-
-        console.log(dcity)
-        var deleteCity = dcity
-
-        var findCity = table.findIndex(function(position) {
-            return position.name == deleteCity;
+        var findCity = table.findIndex(function(index) {
+            return index.name == dcity;
         })
-        console.log(findCity)
         table.splice(findCity, 1)
         cities.splice(findCity, 1)
         return {

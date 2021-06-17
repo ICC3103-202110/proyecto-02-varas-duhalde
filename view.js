@@ -16,7 +16,6 @@ function getTitle() {
 function getTable(model) {
     const { table } = model
     return table
-
 }
 /*
 function inputForm(model) {
