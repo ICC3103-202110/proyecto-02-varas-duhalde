@@ -1,4 +1,4 @@
-const { addLocation, deleteCity, inputCity, updateCity } = require('./view')
+const { addLocation, dcity, inputCity, ucity } = require('./view')
 const { printTable } = require('console-table-printer')
 
 // Impure
@@ -11,9 +11,9 @@ async function app(state, update, view) {
         console.log(title)
         printTable(table)
             // FORM (Ask user input)
-        const { action, city, updateCity, deleteCity, answers } = await addLocation(model)
+        const { action, city, ucity, dcity, answers } = await addLocation(model)
 
-        const updatedModel = update(model, action, city, answers, updateCity, deleteCity)
+        const updatedModel = update(model, action, city, ucity, dcity, answers)
         state = {
             ...state,
             model: updatedModel,

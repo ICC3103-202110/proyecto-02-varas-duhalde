@@ -1,17 +1,17 @@
 const inquirer = require('inquirer')
 
-function update(model, action, city, updateCity, deleteCity, answer) {
+function update(model, action, city, ucity, dcity) {
     const { table } = model
     const { cities } = model
-    console.log(city);
+
     console.log(model);
 
     if (action == 'Add City') {
         const nextCity = city
-
-        row = { name: city, temp: 1, max: 1, min: 1 }
-        table.push(row)
-        cities.push(city)
+        console.log(city)
+        addCities = { name: nextCity, temp: 1, max: 1, min: 1 }
+        table.push(addCities)
+        cities.push(nextCity)
 
         return {
             ...model,
@@ -24,25 +24,42 @@ function update(model, action, city, updateCity, deleteCity, answer) {
         }
 
     } else if (action == 'Update City') {
+        console.log(ucity)
+        let findCity = table.findIndex(function(position) {
+            return position.name == ucity;
+        });
+        const newTemp = table[findCity].temp = 123
+        const newMax = table[findCity].max = 123
+        const newMin = table[findCity].min = 123
         return {
             ...model,
-            name: updateCity,
-            temp: 2,
-            max: 2,
-            min: 2
-
+            name: city,
+            temp: newTemp,
+            max: newMax,
+            min: newMin,
+            cities: cities,
+            table: table,
 
         }
-    } else if (action == 'Delete City')
+
+    } else if (action == 'Delete City') {
+
+        console.log(dcity)
+        var deleteCity = dcity
+
+        var findCity = table.findIndex(function(position) {
+            return position.name == deleteCity;
+        })
+        console.log(findCity)
+        table.splice(findCity, 1)
+        cities.splice(findCity, 1)
         return {
             ...model,
-            name: deleteCity,
-            temp: 3,
-            max: 3,
-            min: 3
+            cities: cities,
+            table: table
         }
+    }
 }
-
 
 module.exports = {
     update

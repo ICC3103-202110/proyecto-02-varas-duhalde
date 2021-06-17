@@ -40,6 +40,8 @@ function inputForm(model) {
 
 function addLocation(model) {
     const { city } = model
+    const { dcity } = model
+    const { ucity } = model
     const { cities } = model
     const message = 'Select Action'
     const choices = ['Add City', 'Update City', 'Delete City']
@@ -63,21 +65,22 @@ function addLocation(model) {
 
         },
         {
-            name: 'updateCity',
+            name: 'ucity',
             type: 'list',
             message: 'what city do you want to Update ',
             choices: cities,
 
-            when: (answers) => answers.action == 'Update City'
+            when: (answers) => answers.action == ('Update City'),
 
         },
         {
-            name: 'deleteCity',
+            name: 'dcity',
             type: 'list',
             message: 'what city do you want to Delete ',
             choices: cities,
 
-            when: (answers) => answers.action == 'Delete City'
+
+            when: (answers) => answers.action == ('Delete City'),
 
         }
     ])
