@@ -1,15 +1,10 @@
 const { addLocation, dcity, inputCity, ucity } = require('./view')
 const { printTable } = require('console-table-printer')
-    //
-let weather = {
-        "apiKey": "05742665ac70e1c44830f0a44ce1a51c",
-        fetchWeather: function() {
-            fetch(
+const { getCity } = require('./update')
 
-            )
-        }
-    }
-    // Impure
+//
+
+// Impure
 async function app(state, update, view) {
     while (true) {
         const { model, currentView } = state
@@ -21,12 +16,16 @@ async function app(state, update, view) {
             // FORM (Ask user input)
         const { action, city, ucity, dcity, answers } = await addLocation(model)
 
-        const updatedModel = update(model, action, city, ucity, dcity, answers)
-        state = {
-            ...state,
-            model: updatedModel,
-            currentView: view(updatedModel)
-        }
+        await update(model, action, city, ucity, dcity, answers)
+            .then((updatedModel) => {
+                if (updatedModel) {
+                    state = {
+                        ...state,
+                        model: updatedModel,
+                        currentView: view(updatedModel)
+                    }
+                }
+            });
     }
 }
 

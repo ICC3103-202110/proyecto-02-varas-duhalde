@@ -1,25 +1,57 @@
 const inquirer = require('inquirer')
+const axios = require('axios').default;
 
-function update(model, action, city, ucity, dcity) {
+
+
+async function getCity(cityName) {
+    const axios = require('axios').default;
+    return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=05742665ac70e1c44830f0a44ce1a51c`)
+    
+    .then((response) => {
+
+            const temp_min = response.data.main.temp_min;
+            const temp_max = response.data.main.temp_max;
+            const temp = response.data.main.temp;
+            return [temp_min, temp_max, temp];
+
+        })
+        .catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+async function update(model, action, city, ucity, dcity) {
     const { table } = model
     const { cities } = model
 
     if (action == 'Add City') {
-        const nextCity = city
-        console.log(city)
-        addCities = { name: nextCity, temp: 1, max: 1, min: 1 }
-        table.push(addCities)
-        cities.push(nextCity)
 
-        return {
-            ...model,
-            name: nextCity,
-            temp: 1,
-            max: 1,
-            min: 1,
-            cities: cities,
-            table: table
-        }
+        const nextCity = city
+        return getCity(nextCity)
+            .then((getCityResponse) => {
+                if (getCityResponse) {
+
+                    const addCities = { name: nextCity, temp: getCityResponse[2]-273.13, max: getCityResponse[1], min: getCityResponse[0] }
+                    cities.push(nextCity)
+                    table.push(addCities)
+                    return {
+                        ...model,
+                        /*name: nextCity,
+                        temp: getCityResponse[2],
+                        max: getCityResponse[1],
+                        min: getCityResponse[0],*/
+                        cities: cities,
+                        table: table
+                    }
+
+                }
+                return false
+            })
+            .catch(() => {
+                console.log('la ciudad no existe');
+                return false;
+            })
 
     } else if (action == 'Update City') {
         let findCity = table.findIndex(function(index) {
@@ -53,5 +85,6 @@ function update(model, action, city, ucity, dcity) {
 }
 
 module.exports = {
-    update
+    update,
+    getCity,
 }
